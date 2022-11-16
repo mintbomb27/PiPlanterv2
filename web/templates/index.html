@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <h2>🌱 PiPlanter</h2>
+    <div class="container">
+        <div class="item">
+            <img src="{{ url_for('static', path='/icon_temp.png') }}" alt="">
+             <h3 class="title">Temperature</h3>
+             <p id="temperature" class="value">35* C</p>
+        </div>
+        <div class="item">
+            <img src="{{ url_for('static', path='/icons8-humidity-50.png') }}" alt="">
+            <h3 class="title">Humidity</h3>
+            <p id="humidity" class="value">25</p>
+        </div>
+        <div class="item">
+            <img src="{{ url_for('static', path='/3652140-200.png') }}" alt="">
+            <h3 class="title">Moisture</h3>
+            <p id="moisture" class="value">55</p>
+        </div>
+        <div class="item">
+            <img src="{{ url_for('static', path='/3652140-200.png') }}" alt="">
+            <h3 class="title">Light</h3>
+            <p id="light" class="value">55</p>
+        </div>
+    </div>
+    <script>
+        function updateVals() {
+            fetch("http://raspberrypi.local:8000/sensors/")
+                .then((res) => (res.json()))
+                .then(res => {
+                    for(const r of res) {
+                        document.getElementById(r.name).innerHTML = r.value;
+                    }
+                })
+        }
+        setInterval(updateVals, 5000);
+    </script>
+</body>
+</html>
